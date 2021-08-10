@@ -1,0 +1,12 @@
+---
+  - name: Test the module
+    hosts: localhost
+    become: yes
+    tasks:
+      - name: Test module
+        my_test:
+          name: chager
+          set_amount_days: '100'
+        register: output
+      - debug:
+          msg: "{{ output }}"   
