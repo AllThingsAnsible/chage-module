@@ -3,10 +3,10 @@
     hosts: localhost
     become: yes
     tasks:
-      - name: Test module
+      - name: Just the name
         my_test:
           name: chager
-          set_amount_days: '100'
+          set_amount_days: '300'
         register: output
       - debug:
-          msg: "{{ output }}"   
+          msg: "{{ output }}"
