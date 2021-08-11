@@ -79,8 +79,7 @@ def run_module():
         name=dict(type='str', required=True),
         new=dict(type='bool', required=False, default=False),
         set_amount_days=dict(type='str', required=False),
-        change=dict(type='bool', required=False, default=False),
-        show_days=dict(type='bool', required=False, default=False)
+        list_days=dict(type='bool', required=False, default=False)
     )
 
     # seed the result dict in the object
@@ -90,8 +89,8 @@ def run_module():
     # for consumption, for example, in a subsequent task
     result = dict(
         changed=False
-        #original_message='',
-        #message=''
+       # original_message='',
+       # message=''
     )
 
     # the AnsibleModule object will be our abstraction working with Ansible
@@ -170,22 +169,28 @@ def run_module():
                     boobz = str(math.floor((epoch-current_epoch_time)/86400))
                     return boobz
 
-    result['name'] = module.params['name']
-    result['number of days until expiration'] = myFunc()
 
 
-    if module.params['name'] and module.params['change'] and module.params['set_amount_days']:
-       pwordChange=subprocess.run(['chage','-M',module.params['set_amount_days'],module.params['name']], stdout=subprocess.PIPE)
-       theFinal=pwordChange.stdout.decode('utf-8') 
+    if module.params['name']:
+        result['name'] = module.params['name']
 
+    if module.params['name'] and module.params['list_days']:
+        result['name'] = module.params['name']
+        result['number of days until expiration'] = myFunc()
+
+    if module.params['name'] and module.params['set_amount_days']:
         
-
+        begin=subprocess.run(['chage','-M',module.params['set_amount_days'],module.params['name']], stdout=subprocess.PIPE)
+        begin.stdout.decode('utf-8')
+        
+        result['name'] = module.params['name']
+        result['you set the password to expire in'] = module.params['set_amount_days']
 
 
     # use whatever logic you need to determine whether or not this module
     # made any modifications to your target
-    if module.params['new']:
-        result['changed'] = True
+#    if module.params['new']:
+#        result['changed'] = True
 
     # during the execution of the module, if there is an exception or a
     # conditional state that effectively causes a failure, run
