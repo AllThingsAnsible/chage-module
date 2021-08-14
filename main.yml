@@ -6,7 +6,8 @@
       - name: Just the name
         my_test:
           name: chager
-          set_amount_days: '300'
+          pass_expires: True
+          last_pass_change: True
         register: output
       - debug:
           msg: "{{ output }}"
