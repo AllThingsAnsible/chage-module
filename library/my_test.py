@@ -189,13 +189,13 @@ def run_module():
         result['name'] = module.params['name']
         result['Number of days until expiration'] = myFunc(chageFlag('Password expires'))
 
-#    if module.params['name'] and module.params['set_amount_days']:
+    if module.params['name'] and module.params['set_amount_days']:
         
-#        begin=subprocess.run(['chage','-M',module.params['set_amount_days'],module.params['name']], stdout=subprocess.PIPE)
-#        begin.stdout.decode('utf-8')
+        begin=subprocess.run(['chage','-M',module.params['set_amount_days'],module.params['name']], stdout=subprocess.PIPE)
+        begin.stdout.decode('utf-8')
         
-#        result['name'] = module.params['name']
-#        result['you set the password to expire in'] = module.params['set_amount_days']
+        result['name'] = module.params['name']
+        result['you set the password to expire in'] = module.params['set_amount_days']
 
 
     # use whatever logic you need to determine whether or not this module
