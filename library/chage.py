@@ -10,9 +10,11 @@ DOCUMENTATION = r'''
 ---
 module: chage
 
-This module makes working with the chage command a little easier.
+short_description: This is my test module
 
-version: "1.0.0"
+# If this is part of a collection, you need to use semantic versioning,
+# i.e. the version is of the form "2.5.0" and not "2.4".
+version_added: "1.0.0"
 
 description: This is my longer description explaining my test module.
 
@@ -21,77 +23,51 @@ options:
         description: This is the message to send to the test module.
         required: true
         type: str
-
     new:
         description:
             - Control to demo if the result of this module is changed or not.
             - Parameter description can be a list as well.
         required: false
         type: bool
-
-    last_pass_changed:
-        description: Identify user and set option to True in order to determine the date of the last time the password was changed.
-        required: false
-        type: bool
-
-    set_amount_days:
-        description: Select username and set the amount of days the current password will expire in.
-        required: false
-        type: str
-
-    pass_expires:
-        description: Select user and set option to true in order to see the amount of days remaining until current password expires.
-        required: false
-        type: bool
-
+# Specify this value according to your collection
+# in format of namespace.collection.doc_fragment_name
 extends_documentation_fragment:
-    - chage
+    - my_namespace.my_collection.my_doc_fragment_name
 
 author:
-    - Daniel VonMoser (DannyV99@github.git)
+    - Your Name (@yourGitHubHandle)
 '''
 
 EXAMPLES = r'''
+# Pass in a message
+- name: Test with a message
+  my_namespace.my_collection.my_test:
+    name: hello world
 
-- name: List the amount of days until password expires for any particular user.
-  chage:
-    name: user
-    pass_expires: True
+# pass in a message and have changed true
+- name: Test with a message and changed output
+  my_namespace.my_collection.my_test:
+    name: hello world
+    new: true
 
-- name: List the last date of the last password change
-  chage:
-    name: user    
-    last_pass_change: True
-
-- name: Chnage the amount of days until password expires 
-  chage:
-    name: user
-    set_amount_days: '100'
+# fail the module
+- name: Test failure of the module
+  my_namespace.my_collection.my_test:
+    name: fail me
 '''
 
 RETURN = r'''
-
-"msg": {
-        "changed": false,
-        "failed": false,
-        "name": "user"
-    }
-
-"msg": {
-        "changed": false,
-        "failed": false,
-        "name": "user",
-        "you set the password to expire in": "100"
-    }
-
-
-"msg": {
-        "Number of days until expiration": "90",
-        "changed": false,
-        "failed": false,
-        "name": "user"
-    }
-
+# These are examples of possible return values, and in general should use other names for return values.
+original_message:
+    description: The original name param that was passed in.
+    type: str
+    returned: always
+    sample: 'hello world'
+message:
+    description: The output message that the test module generates.
+    type: str
+    returned: always
+    sample: 'goodbye'
 '''
 
 from ansible.module_utils.basic import AnsibleModule
@@ -114,8 +90,8 @@ def run_module():
     # for consumption, for example, in a subsequent task
     result = dict(
         changed=False
-        original_message='',
-        message=''
+       # original_message='',
+       # message=''
     )
 
     # the AnsibleModule object will be our abstraction working with Ansible
@@ -224,8 +200,8 @@ def run_module():
 
     # use whatever logic you need to determine whether or not this module
     # made any modifications to your target
-    if module.params['new']:
-        result['changed'] = True
+#    if module.params['new']:
+#        result['changed'] = True
 
     # during the execution of the module, if there is an exception or a
     # conditional state that effectively causes a failure, run

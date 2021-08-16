@@ -3,10 +3,13 @@
     hosts: localhost
     become: yes
     tasks:
-      - name: Just the name
-        my_test:
-          name: chager
+      - name: Test the chage module
+        chage:
+          name: user
+          last_pass_change: True
+          pass_expires: True
           set_amount_days: '100'
+        no_log: True
         register: output
       - debug:
           msg: "{{ output }}"
